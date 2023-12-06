@@ -2,11 +2,14 @@ const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
 
+const dotenv = require('dotenv');
+dotenv.config()
+
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root123",
-  database: "mydatabase"
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
 });
 
 db.connect((err) => {
