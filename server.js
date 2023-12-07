@@ -6,10 +6,10 @@ const zlib = require("zlib");
 
 const db = mysql.createPool({
   connectionLimit: 10,
-  host: "154.41.240.230",
-  user: "u532639681_root",
-  password: "W@2915djkq#",
-  database: "u532639681_mydatabase",
+  host: "bbgeif6zevym7ur9zo9e-mysql.services.clever-cloud.com",
+  user: "u8k8u7qknte7ktez",
+  password: "upL9crOSxoxN03QoEYDs",
+  database: "bbgeif6zevym7ur9zo9e",
   compress: true, // Enable compression
   stream: function (options, callback) {
     // Use zlib.createDeflateRaw() for raw deflate compression
