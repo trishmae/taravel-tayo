@@ -2,14 +2,16 @@ const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const zlib = require("zlib");
+const dotenv = require("dotenv");
+dotenv.config()
 
 
 const db = mysql.createPool({
   connectionLimit: 5,
-  host: "aws.connect.psdb.cloud",
-  user: "y76e7ao69m22k5yezdsf",
-  password: "pscale_pw_KjjIwEQRSEFTuC5q2gcBrPsdsWmVocDnh7AH2XwxnyI",
-  database: "taravel",
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
   compress: true, // Enable compression
   stream: function (options, callback) {
     // Use zlib.createDeflateRaw() for raw deflate compression
