@@ -51,7 +51,7 @@ app.get("/api/check-connection", (req, res) => {
 app.post("/api/check", (req, res) => {
   const { sourceCoordinates, destCoordinates } = req.body;
   db.query(
-    "SELECT algResults FROM genetic_data1 WHERE sourceCoordinates = ? AND destCoordinates = ?",
+    "SELECT algResults FROM genetic_data WHERE sourceCoordinates = ? AND destCoordinates = ?",
     [JSON.stringify(sourceCoordinates), JSON.stringify(destCoordinates)],
     (err, results) => {
       if (err) {
@@ -72,7 +72,7 @@ app.post("/api/save-result", (req, res) => {
   const { sourceCoordinates, destCoordinates, algResults } = req.body;
 
   db.query(
-    "INSERT INTO genetic_data1 (sourceCoordinates, destCoordinates, algResults) VALUES (?, ?, ?)",
+    "INSERT INTO genetic_data (sourceCoordinates, destCoordinates, algResults) VALUES (?, ?, ?)",
     [
       JSON.stringify(sourceCoordinates),
       JSON.stringify(destCoordinates),
@@ -92,7 +92,7 @@ app.post("/api/save-result", (req, res) => {
 app.delete("/api/delete-directions", (req, res) => {
   const { sourceCoordinates, destCoordinates } = req.body;
   db.query(
-    "DELETE FROM genetic_data1 WHERE sourceCoordinates = ? AND destCoordinates = ?",
+    "DELETE FROM genetic_data WHERE sourceCoordinates = ? AND destCoordinates = ?",
     [
       JSON.stringify(sourceCoordinates),
       JSON.stringify(destCoordinates),

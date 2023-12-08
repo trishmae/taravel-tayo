@@ -306,7 +306,7 @@ function generateRouteInstructions(routeData) {
     let signboard = "";
 
     // Remove 'terminal' if present in name
-    if (name.endsWith("TERMINAL")) {
+    if (name.endsWith("terminal")) {
       name = name.slice(0, -9);
       iconName = "tric.png";
     } else if (name == "walk" && index < commutes.length - 1) {
@@ -325,9 +325,8 @@ function generateRouteInstructions(routeData) {
         const nameParts = name.split(' ');
         signboard = nameParts[nameParts.length - 1];
         signboard = signboard.charAt(0).toUpperCase() + signboard.slice(1);
-        // Remove the signboard from the name
-        name = nameParts.slice(0, -1).join(' ') + " JEEPNEY";
       }
+      name += " JEEPNEY";
       iconName = "jeep.png";
     }
 
