@@ -109,5 +109,5 @@ app.delete("/api/delete-directions", (req, res) => {
 });
 
 
-
-app.listen(20936, () => console.log("Server running on port 3000"));
+const PORT = process.env.MYSQL_PORT;
+app.listen(PORT, () => console.log("Server running on port 3000"));
