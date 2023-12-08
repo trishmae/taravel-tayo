@@ -86,6 +86,8 @@ function extractCostDistance(path, links) {
               name: currentType,
               cost: currentTypeCost,
               distance: currentTypeDistance,
+              source: links.source,
+              target: links.target
             });
           }
         }
