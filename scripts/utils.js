@@ -295,7 +295,31 @@ function generateRouteInstructions(routeData) {
   let commutes = routeData.details.commutes;
   let instructionElements = [];
 
+  // Get all source node from commute
+  let sourceList = commutes.map(commute => commute.source);
+
+  // Get all stop nodes from commute.source
+  let stopList = sourceList.map(source => {
+    let node = routeData.nodes.find(node => node.id === source);
+    return node ? node.stop : null;
+  });
+
   commutes.forEach((commute, index) => {
+    for (let i = 1; i < stopList.length; i += 1) {
+      let getOnStop = stopList[i];
+      let getOffStop = stopList[i + 1];
+      let commuteIndex = i;
+      let commuteStop = { getOn: getOnStop, getOff: getOffStop };
+      if (commute.type !== "walk") {
+        // Check if the current commuteIndex exists in commutes array
+        if (!commutes[commuteIndex]) {
+          commutes[commuteIndex] = {};
+        }  
+        // Insert or update commuteStop based on commute.type
+        commutes[commuteIndex] = { ...commutes[commuteIndex], ...commuteStop };
+      }
+    }
+
     let instruction = document.createElement("div");
     instruction.className = "instructionStyle";
 
@@ -305,30 +329,29 @@ function generateRouteInstructions(routeData) {
     // Initialize signboard variable
     let signboard = "";
 
-    // Remove 'terminal' if present in name
-    if (name.endsWith("TERMINAL")) {
+    if (commute.type === "tricycle") {
       name = name.slice(0, -9);
       iconName = "tric.png";
-    } else if (name == "walk" && index < commutes.length - 1) {
-      let nextCommute = commutes[index + 1].name.replace(/-/g, " ");
-      name += " to " + nextCommute;
-      iconName = "walk.png";
-      if (!nextCommute.endsWith("TERMINAL")) {
-        name += " JEEP LOADING POINT";
-      }
-    } else if (name == "walk" && index === commutes.length - 1) {
-      name += " to your final destination";
-      iconName = "walk.png";
-    } else {
-      if (name != "walk") {
-        // Extract the signboard from the second-to-last part
-        const nameParts = name.split(' ');
-        signboard = nameParts[nameParts.length - 1];
-        signboard = signboard.charAt(0).toUpperCase() + signboard.slice(1);
-        // Remove the signboard from the name
-        name = nameParts.slice(0, -1).join(' ') + " JEEPNEY";
-      }
+    } else if (commute.type === "jeep") {
+      // Extract the signboard from the second-to-last part
+      const nameParts = name.split(' ');
+      signboard = nameParts[nameParts.length - 1];
+      signboard = signboard.charAt(0).toUpperCase() + signboard.slice(1);
+      // Remove the signboard from the name
+      name += " JEEPNEY";
       iconName = "jeep.png";
+    } else if (commute.type === "walk") {
+      if (index < commutes.length - 1) {
+        let nextCommute = commutes[index + 1].name.replace(/-/g, " ");
+        name += " to " + nextCommute;
+        iconName = "walk.png";
+        if (!nextCommute.endsWith("terminal")) {
+          name += " JEEP LOADING POINT";
+        }
+      } else {
+        name += " TO YOUR FINAL DESTINATION";
+        iconName = "walk.png";
+      }
     }
 
     // Capitalize all letters in name
@@ -355,6 +378,19 @@ function generateRouteInstructions(routeData) {
       signBoard.textContent = `Signboard: ${signboard}`; // Display signboard at the bottom of the second column
       signBoard.className = "subDivStyle signBoardStyle";
       textDiv.appendChild(signBoard);
+    }
+
+    // Add Get On and Get Off information
+    if (commute.type !== "walk") {
+      let getOnDiv = document.createElement("div");
+      getOnDiv.textContent = `Get On: ${commutes[index].getOn}`;
+      getOnDiv.className = "subDivStyle getOnStyle";
+      textDiv.appendChild(getOnDiv);
+
+      let getOffDiv = document.createElement("div");
+      getOffDiv.textContent = `Get Off: ${commutes[index].getOff}`;
+      getOffDiv.className = "subDivStyle getOffStyle";
+      textDiv.appendChild(getOffDiv);
     }
 
     instruction.appendChild(textDiv);
