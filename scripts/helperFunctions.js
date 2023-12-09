@@ -87,7 +87,8 @@ function extractCostDistance(path, links) {
               cost: currentTypeCost,
               distance: currentTypeDistance,
               type: link.type,
-              source: links.source
+              source: link.source,
+              target: link.target
             });
           }
         }
@@ -145,7 +146,8 @@ function extractCostDistance(path, links) {
               cost: 0,
               distance: link.weight,
               type: link.type,
-              source: link.source
+              source: link.source,
+              target: link.target
             });
           }
         }
