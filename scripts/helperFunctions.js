@@ -86,6 +86,9 @@ function extractCostDistance(path, links) {
               name: currentType,
               cost: currentTypeCost,
               distance: currentTypeDistance,
+              type: link.type,
+              source: link.source,
+              target: link.target
             });
           }
         }
@@ -130,6 +133,9 @@ function extractCostDistance(path, links) {
               name: "walk", // or you can use a specific name for walk commutes
               cost: 0,
               distance: link.weight,
+              type: link.type,
+              source: link.source,
+              target: link.target
             });
             currentTypeDistance = 0;
           }
@@ -139,24 +145,14 @@ function extractCostDistance(path, links) {
               name: "walk",
               cost: 0,
               distance: link.weight,
+              type: link.type,
+              source: link.source,
+              target: link.target
             });
           }
         }
       }
     }
-
-    // if (i === path.length - 2) {
-    //   if (!typeMap[lastType]) {
-    //     typeMap[lastType] = { distance: 0, cost: 0 };
-    //   }
-    //   typeMap[lastType].distance += currentTypeDistance;
-    //   typeMap[lastType].cost += currentTypeCost;
-    //   commutes.push({
-    //     name: lastType,
-    //     cost: Math.ceil(currentTypeCost),
-    //     distance: currentTypeDistance,
-    //   });
-    // }
   }
 
   commutes.forEach((commute) => {
