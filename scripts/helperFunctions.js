@@ -151,19 +151,6 @@ function extractCostDistance(path, links) {
         }
       }
     }
-
-    // if (i === path.length - 2) {
-    //   if (!typeMap[lastType]) {
-    //     typeMap[lastType] = { distance: 0, cost: 0 };
-    //   }
-    //   typeMap[lastType].distance += currentTypeDistance;
-    //   typeMap[lastType].cost += currentTypeCost;
-    //   commutes.push({
-    //     name: lastType,
-    //     cost: Math.ceil(currentTypeCost),
-    //     distance: currentTypeDistance,
-    //   });
-    // }
   }
 
   commutes.forEach((commute) => {
