@@ -86,8 +86,8 @@ function extractCostDistance(path, links) {
               name: currentType,
               cost: currentTypeCost,
               distance: currentTypeDistance,
-              source: links.source,
-              target: links.target
+              type: link.type,
+              source: links.source
             });
           }
         }
@@ -132,6 +132,9 @@ function extractCostDistance(path, links) {
               name: "walk", // or you can use a specific name for walk commutes
               cost: 0,
               distance: link.weight,
+              type: link.type,
+              source: link.source,
+              target: link.target
             });
             currentTypeDistance = 0;
           }
@@ -141,6 +144,8 @@ function extractCostDistance(path, links) {
               name: "walk",
               cost: 0,
               distance: link.weight,
+              type: link.type,
+              source: link.source
             });
           }
         }
